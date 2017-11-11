@@ -10,7 +10,7 @@
                   <v-container fluid v-for="(post, index) of posts" :key="index">
                     <v-layout row wrap>
                       <v-flex>
-                        <v-card color="teal lighten-2" flat tile xs4>
+                        <v-card color="grey lighten-2" flat tile xs4 class="card1">
                           <router-link :to="aboutRoute(post.id)">
                             <v-card-media>
                               <v-container fill-height fluid>
@@ -80,21 +80,10 @@ import axios from 'axios';
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-h1, h2 {
-  font-weight: normal;
+.card1 {
+   transition: all 100ms ease-in-out;
 }
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #35495E;
+.card1:hover {
+  transform: translateY(-0.5em);
 }
 </style>
