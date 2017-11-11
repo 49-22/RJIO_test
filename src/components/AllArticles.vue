@@ -1,35 +1,81 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="http://chat.vuejs.org/" target="_blank" rel="noopener">Vue Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank" rel="noopener">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <main>
+      <v-content>
+        <v-container fluid>
+          <v-slide-y-transition mode="out-in">
+            <v-layout column align-center>
+              <v-flex xs12 sm8>
+                <v-card>
+                  <v-container fluid v-for="(post, index) of posts" :key="index">
+                    <v-layout row wrap>
+                      <v-flex>
+                        <v-card color="teal lighten-2" flat tile xs4>
+                          <router-link :to="aboutRoute(post.id)">
+                            <v-card-media>
+                              <v-container fill-height fluid>
+                                <v-layout fill-height>
+                                  <v-flex align-end flexbox>
+                                    <span class="headline">{{post.title}}</span>
+                                  </v-flex>
+                                </v-layout>
+                              </v-container>
+                            </v-card-media>
+                          </router-link>
+                          <v-card-text color="blue darken-2">
+                            {{post.body}}
+                          </v-card-text>
+                        </v-card>
+                      </v-flex>
+                    </v-layout>
+                  </v-container>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-slide-y-transition>
+        </v-container>
+      </v-content>
+    </main>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+  export default {
+    data () {
+      return {
+        about: "/about",
+        posts: [],
+        clipped: false,
+        drawer: true,
+        fixed: false,
+        items: [{
+          icon: 'bubble_chart',
+          title: 'Inspire'
+        }],
+        miniVariant: false,
+        right: true,
+        rightDrawer: false,
+        title: 'All Article posts'
+      }
+    },
+    methods: {
+      aboutRoute: function(id) {
+        return "/about/"+id;
+      }
+    },
+    created () {
+      axios.get(`https://jsonplaceholder.typicode.com/posts`)
+      .then(response => {
+        console.log(response)
+        this.posts = response.data
+      })
+      .catch(e => {
+        console.log(e)
+      })
+   }
 
-export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js PWA'
-    }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
