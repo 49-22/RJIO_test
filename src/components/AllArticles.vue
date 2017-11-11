@@ -82,6 +82,7 @@ import axios from 'axios';
 <style>
 .card1 {
    transition: all 100ms ease-in-out;
+   box-shadow: 1px 5px 10px grey;
 }
 .card1:hover {
   transform: translateY(-0.5em);
